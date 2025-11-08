@@ -59,6 +59,11 @@ window.onload = function() {
 
     
     loadImages();
+    loadMap();
+
+    console.log(walls.size);
+    console.log(food.size);
+    console.log(ghosts.size);
 }
 
 //load images
@@ -95,13 +100,16 @@ function loadMap() {
     food.clear();
     ghosts.clear();
 
-    for (let row = 0; row < rowcount; row++) {
-        for (let col = 0; col < colcount; col++) {
-            let tile = tileMap[row][col];
-            const x = col * cellsize;
-            const y = row * cellsize;
+    for (let r = 0; row < rowcount; r++) {
+        for (let c = 0; col < colcount; c++) {
+            
+            const row = titlemap[r];
+            const tileMapChar = row[c];
 
-            if (titelMapChar == 'X') {
+            const x = c * cellsize;
+            const y = r * cellsize;
+
+            if (tileMap == 'X') {
                 //create wall block
                 const wallBlock = new Block(wall, x, y, cellsize, cellsize);
                 walls.add(wallBlock);
