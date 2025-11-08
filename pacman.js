@@ -84,3 +84,19 @@ function loadImages() {
     greenghost.src = "icons/green.png";
 
 }
+
+//block class to create blocks
+class Block {
+    //constructor for blocks
+    constructor(image,x,y,width,height) {
+        this.image = image;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
+        //starting position (pacman and ghosts)
+        this.startX = x;
+        this.startY = y;
+    }
+}
