@@ -103,7 +103,7 @@ function loadMap() {
     for (let r = 0; r < rowcount; r++) {
         for (let c = 0; c < colcount; c++) {
             
-            const row = titlemap[r];
+            const row = tileMap[r];
             const tileMapChar = row[c];
 
             const x = c * cellsize;
