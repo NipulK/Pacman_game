@@ -100,8 +100,8 @@ function loadMap() {
     food.clear();
     ghosts.clear();
 
-    for (let r = 0; row < rowcount; r++) {
-        for (let c = 0; col < colcount; c++) {
+    for (let r = 0; r < rowcount; r++) {
+        for (let c = 0; c < colcount; c++) {
             
             const row = titlemap[r];
             const tileMapChar = row[c];
