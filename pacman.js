@@ -29,7 +29,7 @@ const tileMap = [
   "XXXX XXXXX XXXXXXX",
   "OOOXX X       XOOO",
   "XXXX X XXrXX X XXXX",
-  "O      bpo      O",
+  "O      byg      O",
   "XXXX X XXXXX X XXXX",
   "OOOX X     X XOOOX",
   "XXXX X XXXXX X XXXX",
@@ -43,6 +43,11 @@ const tileMap = [
   "XXXXXXXXXXXXXXXXXXX"
 ];
 
+//the reason for using set is to avoid duplicate walls. if we use array, there will be duplicate walls
+const walls = new Set();
+const food = new Set();
+const ghosts = new Set();
+let pacman;
 
 
 //draw board
@@ -84,6 +89,57 @@ function loadImages() {
     greenghost.src = "icons/green.png";
 
 }
+
+function loadMap() {
+    walls.clear();
+    food.clear();
+    ghosts.clear();
+
+    for (let row = 0; row < rowcount; row++) {
+        for (let col = 0; col < colcount; col++) {
+            let tile = tileMap[row][col];
+            const x = col * cellsize;
+            const y = row * cellsize;
+
+            if (titelMapChar == 'X') {
+                //create wall block
+                const wallBlock = new Block(wall, x, y, cellsize, cellsize);
+                walls.add(wallBlock);
+            }
+            else if (tileMapChar == '') {
+                //create food block
+                const foodBlock = new Block(null, x+14, y+14, 4, 4); //the reason for x+14 and y+14 is to center the food block in the cell
+                food.add(foodBlock);
+            }
+            else if (tileMapChar == 'P') {
+                //create pacman block
+                pacman = new Block(right, x, y, cellsize, cellsize);
+            }
+            else if (tileMapChar == 'r') {
+                //create red ghost block
+                const redGhostBlock = new Block(redghost, x, y, cellsize, cellsize);
+                ghosts.add(redGhostBlock);
+            }
+            else if (tileMapChar == 'b') {
+                //create blue ghost block
+                const blueGhostBlock = new Block(blueghost, x, y, cellsize, cellsize);
+                ghosts.add(blueGhostBlock);
+            }
+            else if (tileMapChar == 'y') {
+                //create yellow ghost block
+                const yellowGhostBlock = new Block(yellowghost, x, y, cellsize, cellsize);
+                ghosts.add(yellowGhostBlock);
+            }
+            else if (tileMapChar == 'g') {
+                //create green ghost block
+                const greenGhostBlock = new Block(greenghost, x, y, cellsize, cellsize);
+                ghosts.add(greenGhostBlock);
+            }
+        }
+    }
+}
+
+
 
 //block class to create blocks
 class Block {
