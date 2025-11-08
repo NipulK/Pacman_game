@@ -109,7 +109,7 @@ function loadMap() {
             const x = c * cellsize;
             const y = r * cellsize;
 
-            if (tileMap == 'X') {
+            if (tileMapChar == 'X') {
                 //create wall block
                 const wallBlock = new Block(wall, x, y, cellsize, cellsize);
                 walls.add(wallBlock);
