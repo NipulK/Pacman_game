@@ -117,11 +117,14 @@ function loadMap() {
     food.clear();
     ghosts.clear();
 
+    // ✅ Fix: use actual tileMap size
+    const rowcount = tileMap.length;
+    const colcount = tileMap[0].length;
+
     for (let r = 0; r < rowcount; r++) {
         for (let c = 0; c < colcount; c++) {
             
             const row = tileMap[r];
-            console.log(row)
             const tileMapchar = row[c];
 
             const x = c * cellsize;
@@ -132,7 +135,8 @@ function loadMap() {
                 const wallBlock = new Block(wall, x, y, cellsize, cellsize);
                 walls.add(wallBlock);
             }
-            else if (tileMapchar == '') {
+            // ✅ Fix: detect space (' ') instead of empty string ('')
+            else if (tileMapchar == ' ') {
                 //create food block
                 const foodBlock = new Block(null, x+14, y+14, 4, 4); //the reason for x+14 and y+14 is to center the food block in the cell
                 food.add(foodBlock);
