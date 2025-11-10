@@ -22,14 +22,14 @@ let wall;
 
 //board setup 
 const tileMap = [
-  "XXXXXXXXXXXXXXXXXXX",
-  "X                 X",
-  "X XX XXX XXX XX XX",
-  "X X   X X X   X  X",
-  "XXXX XXXXX XXXXXXX",
-  "OOOXX X       XOOO",
-  "XXXX X XXrXX X XXXX",
-  "O      byg      O",
+  [X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X],
+  [X, , , , , , , , , , , , , , , , , ,X],
+  [X, ,X,X, ,X,X,X, , ,X,X,X, ,X,X, ,X,X],
+  [X, ,X, , , ,X, ,X, ,X, , , ,X, , , ,X],
+  [XXXX XXXXX XXXXXXX],
+  [OOOXX X       XOOO],
+  [XXXX X XXrXX X XXXX],
+  [O      byg      O],
   "XXXX X XXXXX X XXXX",
   "OOOX X     X XOOOX",
   "XXXX X XXXXX X XXXX",
