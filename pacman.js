@@ -21,40 +21,28 @@ let wall;
 
 
 //board setup 
-/*const tileMap = [
-    [X,X,X,X, ,X,X,X,X,X, ,X,X,X,X,X,X,X,X],
-  [O,O,O,X,X, ,X, , , , , , , , ,X,O,O,O],
-  [X,X,X,X, ,X, ,X,X,r,X,X, ,X, ,X,X,X,X],
-  [O, , , , , , ,b,y,g, , , , , , , , ,O],
-  [X,X,X,X, ,X, ,X,X,X,X,X, ,X, ,X,X,X,X],
-  [O,O,O,X, ,X, , , , , ,X, , ,X,O,O,O,X],
-  [X,X,X,X, ,X, ,X,X,X,X,X, ,X, ,X,X,X,X],
-  [X, ,X, , , ,X, , , , , ,X, , , ,X, ,X],
-  [X, ,X,X, ,X,X,X,X,X,X,X, ,X,X, , ,X,X],
-  [X, , , ,X, , , ,P, , , ,X, , , , , ,X],
-  [X, ,X, ,X, ,X,X,X,X,X, ,X, ,X, , , ,X],
-  [X, ,X, ,X, , , , , , , ,X, ,X, , ,X,X],
-  [X, ,X,X,X,X,X,X,X,X,X,X,X,X,X, , ,X,X],
-  [X, , , , , , , , , , , , , , , , , ,X],
-  [X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X]
-]; */
-
-const tileMap= [
-  ['X','X','X','X',' ','X','X','X','X','X',' ','X','X','X','X','X','X','X','X'],
-  ['O','O','O','X','X',' ','X',' ',' ',' ',' ',' ',' ',' ',' ','X','O','O','O'],
-  ['X','X','X','X',' ','X',' ','X','X','r','X','X',' ','X',' ','X','X','X','X'],
-  ['O',' ',' ',' ',' ',' ',' ','b','y','g',' ',' ',' ',' ',' ',' ',' ',' ','O'],
-  ['X','X','X','X',' ','X',' ','X','X','X','X','X',' ','X',' ','X','X','X','X'],
-  ['O','O','O','X',' ','X',' ',' ',' ',' ',' ','X',' ',' ','X','O','O','O','X'],
-  ['X','X','X','X',' ','X',' ','X','X','X','X','X',' ','X',' ','X','X','X','X'],
-  ['X',' ','X',' ',' ',' ','X',' ',' ',' ',' ',' ','X',' ',' ',' ','X',' ','X'],
-  ['X',' ','X','X',' ','X','X','X','X','X','X','X',' ','X','X',' ',' ','X','X'],
-  ['X',' ',' ',' ','X',' ',' ',' ','P',' ',' ',' ','X',' ',' ',' ',' ',' ','X'],
-  ['X',' ','X',' ','X',' ','X','X','X','X','X',' ','X',' ','X',' ',' ',' ','X'],
-  ['X',' ','X',' ','X',' ',' ',' ',' ',' ',' ',' ','X',' ','X',' ',' ','X','X'],
-  ['X',' ','X','X','X','X','X','X','X','X','X','X','X','X','X',' ',' ','X','X'],
-  ['X',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'],
-  ['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X']
+const tileMap = [
+    "XXXXXXXXXXXXXXXXXXX",
+    "X        X        X",
+    "X XX XXX X XXX XX X",
+    "X                 X",
+    "X XX X XXXXX X XX X",
+    "X    X       X    X",
+    "XXXX XXXX XXXX XXXX",
+    "OOOX X       X XOOO",
+    "XXXX X XXrXX X XXXX",
+    "O       bpo       O",
+    "XXXX X XXXXX X XXXX",
+    "OOOX X       X XOOO",
+    "XXXX X XXXXX X XXXX",
+    "X        X        X",
+    "X XX XXX X XXX XX X",
+    "X  X     P     X  X",
+    "XX X X XXXXX X X XX",
+    "X    X   X   X    X",
+    "X XXXXXX X XXXXXX X",
+    "X                 X",
+    "XXXXXXXXXXXXXXXXXXX" 
 ];
 
 
@@ -67,20 +55,18 @@ let pacman;
 
 //draw board
 window.onload = function() {
-    board = document.getElementById("board"); // get board from HTML
-    board.width = boardwidth;
-    board.height = boardheight;
-    context = board.getContext("2d"); // used for drawing on the board
-
-
-    
-    console.log(walls.size);
-    console.log(food.size);
-    console.log(ghosts.size);
-
+    board = document.getElementById("board");
+    board.height = boardHeight;
+    board.width = boardWidth;
+    context = board.getContext("2d"); //used for drawing on the board
 
     loadImages();
     loadMap();
+    
+    console.log(walls.size)
+    console.log(foods.size)
+    console.log(ghosts.size)
+
 }
 
 //load images
@@ -109,79 +95,62 @@ function loadImages() {
     yellowghost.src = "icons/yellow.png";
     greenghost = new Image();
     greenghost.src = "icons/green.png";
-
 }
+
 
 function loadMap() {
     walls.clear();
-    food.clear();
+    foods.clear();
     ghosts.clear();
 
-    // ✅ Fix: use actual tileMap size
-    const rowcount = tileMap.length;
-    const colcount = tileMap[0].length;
-
-    for (let r = 0; r < rowcount; r++) {
-        for (let c = 0; c < colcount; c++) {
-            
+    for (let r = 0; r < rowCount; r++) {
+        for (let c = 0; c < columnCount; c++) {
             const row = tileMap[r];
-            const tileMapchar = row[c];
+            const tileMapChar = row[c];
 
-            const x = c * cellsize;
-            const y = r * cellsize;
+            const x = c*tileSize;
+            const y = r*tileSize;
 
-            if (tileMapchar == 'X') {
-                //create wall block
-                const wallBlock = new Block(wall, x, y, cellsize, cellsize);
-                walls.add(wallBlock);
+            if (tileMapChar == 'X') { //block wall
+                const wall = new Block(wallImage, x, y, tileSize, tileSize);
+                walls.add(wall);  
             }
-            // ✅ Fix: detect space (' ') instead of empty string ('')
-            else if (tileMapchar == ' ') {
-                //create food block
-                const foodBlock = new Block(null, x+14, y+14, 4, 4); //the reason for x+14 and y+14 is to center the food block in the cell
-                food.add(foodBlock);
+            else if (tileMapChar == 'b') { //blue ghost
+                const ghost = new Block(blueGhostImage, x, y, tileSize, tileSize);
+                ghosts.add(ghost);
             }
-            else if (tileMapchar == 'P') {
-                //create pacman block
-                pacman = new Block(right, x, y, cellsize, cellsize);
+            else if (tileMapChar == 'o') { //orange ghost
+                const ghost = new Block(orangeGhostImage, x, y, tileSize, tileSize);
+                ghosts.add(ghost);
             }
-            else if (tileMapchar == 'r') {
-                //create red ghost block
-                const redGhostBlock = new Block(redghost, x, y, cellsize, cellsize);
-                ghosts.add(redGhostBlock);
+            else if (tileMapChar == 'p') { //pink ghost
+                const ghost = new Block(pinkGhostImage, x, y, tileSize, tileSize);
+                ghosts.add(ghost);
             }
-            else if (tileMapchar == 'b') {
-                //create blue ghost block
-                const blueGhostBlock = new Block(blueghost, x, y, cellsize, cellsize);
-                ghosts.add(blueGhostBlock);
+            else if (tileMapChar == 'r') { //red ghost
+                const ghost = new Block(redGhostImage, x, y, tileSize, tileSize);
+                ghosts.add(ghost);
             }
-            else if (tileMapchar == 'y') {
-                //create yellow ghost block
-                const yellowGhostBlock = new Block(yellowghost, x, y, cellsize, cellsize);
-                ghosts.add(yellowGhostBlock);
+            else if (tileMapChar == 'P') { //pacman
+                pacman = new Block(pacmanRightImage, x, y, tileSize, tileSize);
             }
-            else if (tileMapchar == 'g') {
-                //create green ghost block
-                const greenGhostBlock = new Block(greenghost, x, y, cellsize, cellsize);
-                ghosts.add(greenGhostBlock);
+            else if (tileMapChar == ' ') { //empty is food
+                const food = new Block(null, x + 14, y + 14, 4, 4);
+                foods.add(food);
             }
         }
     }
 }
 
 
-
 //block class to create blocks
 class Block {
-    //constructor for blocks
     constructor(image,x,y,width,height) {
         this.image = image;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-
-        //starting position (pacman and ghosts)
         this.startX = x;
         this.startY = y;
     }
