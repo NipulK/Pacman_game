@@ -26,7 +26,10 @@ window.onload = function() {
     context = board.getContext("2d");
 
     loadImages();   
-
+    loadBoard();
+    console.log(walls.size);
+    console.log(foods.size);
+    console.log(ghosts.size);
 }
 
 //tile map design
