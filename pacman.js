@@ -27,9 +27,11 @@ window.onload = function() {
 
     loadImages();   
     loadBoard();
-    console.log(walls.size);
-    console.log(foods.size);
-    console.log(ghosts.size);
+
+
+    //console.log(walls.size);
+    //console.log(foods.size);
+    //console.log(ghosts.size);
 }
 
 //tile map design
