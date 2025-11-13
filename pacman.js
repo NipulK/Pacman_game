@@ -134,7 +134,7 @@ function loadBoard() {
             }
 
             else if(tileMapchar == " ") {
-                const food =new Block(null, x + 4, y + 4, 4, 4);
+                const food =new Block(null, x + 12, y + 12, 5, 5);
                 foods.add(food);
             }
         }     
@@ -160,8 +160,9 @@ function draw() {
         context.drawImage(ghost.image, ghost.x, ghost.y, ghost.width, ghost.height);
     }
 
+    context.fillStyle = "white"; //set the color of the food and fillstyle used to draw shapes
     for (let food of foods) {
-        
+        context.fillRect(food.x, food.y, food.width, food.height);
     }
 
 }
