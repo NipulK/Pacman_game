@@ -29,6 +29,7 @@ window.onload = function() {
     loadBoard();
 
 
+    update();
     //console.log(walls.size);
     //console.log(foods.size);
     //console.log(ghosts.size);
@@ -138,6 +139,27 @@ function loadBoard() {
             }
         }     
     }
+}
+
+function update() {
+    //to be implemented
+    draw();
+    setTimeout(update, 50); //20 fps 1 -> 1000ms/20 = 50
+}
+
+function draw() {
+    //to be implemented
+    //in here we will draw all the elements on the board (show the elements that we have in our sets)
+    context.drawImage(pacman.image, pacman.x, pacman.y, pacman.width, pacman.height);
+
+    for (let wall of walls) {
+        context.drawImage(wall.image, wall.x, wall.y, wall.width, wall.height);
+    }
+
+    for (let ghost of ghosts) {
+        context.drawImage(ghost.image, ghost.x, ghost.y, ghost.width, ghost.height);
+    }
+
 }
 
 class Block{
