@@ -160,6 +160,10 @@ function draw() {
         context.drawImage(ghost.image, ghost.x, ghost.y, ghost.width, ghost.height);
     }
 
+    for (let food of foods) {
+        
+    }
+
 }
 
 class Block{
