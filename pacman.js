@@ -33,6 +33,11 @@ window.onload = function() {
     //console.log(walls.size);
     //console.log(foods.size);
     //console.log(ghosts.size);
+
+    document.addEventListener("keyup", movepackman)
+    //keyup and keydown are two different events
+    //keyup - when the key is released
+    //keydown - when the key is pressed down
 }
 
 //tile map design
@@ -143,6 +148,7 @@ function loadBoard() {
 
 function update() {
     //to be implemented
+    move();
     draw();
     setTimeout(update, 50); //20 fps 1 -> 1000ms/20 = 50
 }
@@ -167,6 +173,27 @@ function draw() {
 
 }
 
+function move() {
+    //to be implemented
+    pacman.x += pacman.velocityX;
+    pacman.y += pacman.velocityY;
+}
+
+function movepackman(e) {
+    if(e.key == "ArrowUp"|| e.key == "keyW") {
+        pacman.updateDirection("U");
+    }
+    else if(e.key == "ArrowDown" || e.key == "keyS") {
+        pacman.updateDirection("D");
+    }
+    else if(e.key == "ArrowLeft" || e.key == "keyA") {
+        pacman.updateDirection("L");
+    }
+    else if(e.key == "ArrowRight" || e.key == "keyD") {
+        pacman.updateDirection("R");
+    }
+}
+
 class Block{
     constructor(image,x, y, width, height){
 
@@ -180,5 +207,33 @@ class Block{
         when pacman collides with a ghost*/
         this.startx = x;
         this.starty = y;
+
+        this.direction = "right"; //initial direction of pacman
+        this.velocityX = 0;
+        this.velocityY = 0;
+    }
+
+    updateDirection(direction) {
+        this.direction = direction;
+        this.velocityUpdate();
+    }
+
+    velocityUpdate() {
+        if(this.direction == "U") {
+            this.velocityX = 0;
+            this.velocityY = -tileSize/4;
+        }
+        else if(this.direction == "D") {
+            this.velocityX = 0;
+            this.velocityY = tileSize/4;
+        }
+        else if(this.direction == "L") {
+            this.velocityX = -tileSize/4;
+            this.velocityY = 0;
+        }
+        else if(this.direction == "R") {
+            this.velocityX = tileSize/4;
+            this.velocityY = 0;
+        }
     }
 }
