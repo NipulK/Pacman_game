@@ -154,6 +154,8 @@ function update() {
 }
 
 function draw() {
+
+    context.clearRect(0, 0, boardWidth, boardHeight); //clear the previous frame data
     //to be implemented
     //in here we will draw all the elements on the board (show the elements that we have in our sets)
     context.drawImage(pacman.image, pacman.x, pacman.y, pacman.width, pacman.height);
