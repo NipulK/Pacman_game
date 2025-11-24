@@ -179,6 +179,15 @@ function move() {
     //to be implemented
     pacman.x += pacman.velocityX;
     pacman.y += pacman.velocityY;
+
+    //check wall collision for pacman
+    for (let wall of walls) {
+        if (Collison(pacman, wall)) {
+            //reset pacman's position
+            pacman.x -= pacman.velocityX;
+            pacman.y -= pacman.velocityY;
+        }
+    }
 }
 
 function movepackman(e) {
@@ -194,6 +203,14 @@ function movepackman(e) {
     else if(e.key == "ArrowRight" || e.key == "keyD") {
         pacman.updateDirection("R");
     }
+}
+
+//collision detection function
+function Collison(block1, block2) {
+    return (block1.x < block2.x + block2.width &&
+            block1.x + block1.width > block2.x &&
+            block1.y < block2.y + block2.height &&
+            block1.y + block1.height > block2.y);
 }
 
 class Block{
