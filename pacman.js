@@ -191,17 +191,31 @@ function move() {
 }
 
 function movepackman(e) {
-    if(e.key == "ArrowUp"|| e.key == "keyW") {
+    if(e.key == "ArrowUp"|| e.key == "w") {
         pacman.updateDirection("U");
     }
-    else if(e.key == "ArrowDown" || e.key == "keyS") {
+    else if(e.key == "ArrowDown" || e.key == "s") {
         pacman.updateDirection("D");
     }
-    else if(e.key == "ArrowLeft" || e.key == "keyA") {
+    else if(e.key == "ArrowLeft" || e.key == "a") {
         pacman.updateDirection("L");
     }
-    else if(e.key == "ArrowRight" || e.key == "keyD") {
+    else if(e.key == "ArrowRight" || e.key == "d") {
         pacman.updateDirection("R");
+    }
+
+    //update pacman image based on direction
+    if(e.key == "ArrowUp"|| e.key == "w") {
+        pacman.image = pacmanup;
+    }
+    else if(e.key == "ArrowDown" || e.key == "s") {
+        pacman.image = pacmandown;
+    }
+    else if(e.key == "ArrowLeft" || e.key == "a") {
+        pacman.image = pacmanleft;
+    }
+    else if(e.key == "ArrowRight" || e.key == "d") {
+        pacman.image = pacmanright;
     }
 }
 
@@ -233,8 +247,21 @@ class Block{
     }
 
     updateDirection(direction) {
+        const prevDirection = this.direction;
         this.direction = direction;
         this.velocityUpdate();
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+        
+        //check wall collision
+        for (let wall of walls) {
+            if (Collison(this, wall)) {
+                //if there is a collision, revert to previous direction
+                this.direction = prevDirection;
+                this.velocityUpdate();
+                break; //exit the loop once a collision is detected
+            }
+        }
     }
 
     velocityUpdate() {
