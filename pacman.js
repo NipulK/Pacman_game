@@ -19,28 +19,7 @@ let context;
  let wallimage;
 
 
-window.onload = function() {
-    board = document.getElementById("board");
-    board.width = boardWidth;
-    board.height = boardHeight;
-    context = board.getContext("2d");
-
-    loadImages();   
-    loadBoard();
-
-
-    update();
-    //console.log(walls.size);
-    //console.log(foods.size);
-    //console.log(ghosts.size);
-
-    document.addEventListener("keyup", movepackman)
-    //keyup and keydown are two different events
-    //keyup - when the key is released
-    //keydown - when the key is pressed down
-}
-
-//tile map design
+ //tile map design
 // X - wall , O - space , P - pacman , r - red ghost , b - blue ghost , g - green ghost , y - yellow ghost
 const tileMap = [
     "XXXXXXXXXXXXXXXXXXX",
@@ -102,6 +81,34 @@ function loadImages() {
     wallimage = new Image();
     wallimage.src = "./icons/wall.png"; 
 }
+
+const directions = ["U", "D", "L", "R"]; //ghost directions use to pick random direction
+
+window.onload = function() {
+    board = document.getElementById("board");
+    board.width = boardWidth;
+    board.height = boardHeight;
+    context = board.getContext("2d");
+
+    loadImages();   
+    loadBoard();
+
+    for (let ghost of ghosts) {
+        const randomDirection = directions[Math.floor(Math.random() * 4)]; //4 use to get index from 0 to 3 
+        ghost.updateDirection(randomDirection);
+    }
+
+    update();
+    //console.log(walls.size);
+    //console.log(foods.size);
+    //console.log(ghosts.size);
+    
+    document.addEventListener("keyup", movepackman)
+    //keyup and keydown are two different events
+    //keyup - when the key is released
+    //keydown - when the key is pressed down
+}
+
 
 function loadBoard() {
     for(let r = 0; r < rowCount; r++) {
@@ -187,6 +194,11 @@ function move() {
             pacman.x -= pacman.velocityX;
             pacman.y -= pacman.velocityY;
         }
+    }
+
+    for (let ghost of ghosts) {
+        ghost.x += ghost.velocityX;
+        ghost.y += ghost.velocityY;
     }
 }
 
