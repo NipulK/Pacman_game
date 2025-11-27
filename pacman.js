@@ -196,20 +196,26 @@ function move() {
         }
     }
 
-    for (let ghost of ghosts.values()) {
+    for (let ghost of ghosts) {
         ghost.x += ghost.velocityX;
         ghost.y += ghost.velocityY;
 
         //check wall collision for ghosts
-        for (let wall of walls.values()) {
+        let collided = false;
+        for (let wall of walls) {
             if (Collison(ghost, wall)) {
                 ghost.x -= ghost.velocityX;
                 ghost.y -= ghost.velocityY;
-
-                //pick a new random direction
-                const randomDirection = directions[Math.floor(Math.random() * 4)]; //4 use to get index from 0 to 3 
-                ghost.updateDirection(randomDirection);
+                collided = true;
+                break;
             }
+        }
+
+        //if collided, pick a new random direction
+        if (collided) {
+            const randomDirection = directions[Math.floor(Math.random() * 4)];
+            ghost.direction = randomDirection;
+            ghost.velocityUpdate();
         }
     }
 }
