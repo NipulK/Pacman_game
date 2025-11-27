@@ -203,11 +203,12 @@ function move() {
         //check wall collision for ghosts
         let collided = false;
         for (let wall of walls) {
-            if (Collison(ghost, wall)|| ghost.x < 0 || ghost.x + ghost.width > boardWidth ) {
-                ghost.x -= ghost.velocityX;
-                ghost.y -= ghost.velocityY;
-                collided = true;
-                break;
+            if (Collison(ghost, wall)|| ghost.x < 0 || ghost.x + ghost.width > boardWidth )  //check left and right wall collision. 0 is left wall and boardWidth is right wall
+                {
+                    ghost.x -= ghost.velocityX;
+                    ghost.y -= ghost.velocityY;
+                    collided = true;
+                    break;
             }
         }
 
