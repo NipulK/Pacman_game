@@ -203,7 +203,7 @@ function move() {
         //check wall collision for ghosts
         let collided = false;
         for (let wall of walls) {
-            if (Collison(ghost, wall)) {
+            if (Collison(ghost, wall)|| ghost.x < 0 || ghost.x + ghost.width > boardWidth ) {
                 ghost.x -= ghost.velocityX;
                 ghost.y -= ghost.velocityY;
                 collided = true;
