@@ -83,6 +83,9 @@ function loadImages() {
 }
 
 const directions = ["U", "D", "L", "R"]; //ghost directions use to pick random direction
+let score = 0;
+let lives = 3;
+let gameOver = false; 
 
 window.onload = function() {
     board = document.getElementById("board");
@@ -234,6 +237,19 @@ function move() {
             ghost.direction = randomDirection;
             ghost.velocityUpdate();
         }
+    }
+
+    //check food collision
+    let foodeaten = null;
+    for (let food of foods) {
+        if (Collison(pacman, food)) {
+            foodeaten = food;
+            score += 10; //increase score by 10 for each food eaten
+            break; //exit the loop once a food is eaten
+        }
+    }
+    if (foodeaten) {
+        foods.delete(foodeaten);
     }
 }
 
