@@ -219,23 +219,18 @@ function move() {
 
     for (let ghost of ghosts) {
 
-        //simple AI for ghosts to always move up and down in the middle vertical path
-        if (ghost.y == tileSize * 20 && ghost.direction != "U" && ghost.direction != "D") 
-        {
-            ghost.updateDirection("U");
-            
-        }
-        /*if (ghost.y == tileSize *9 && ghost.direction == "U")
-        {
-            ghost.updateDirection("D");
-        }
-        if (ghost.y == tileSize * 9 && ghost.direction == "D")
-        {
-            ghost.updateDirection("U");
-        }*/
-
         ghost.x += ghost.velocityX;
         ghost.y += ghost.velocityY;
+
+        //check if ghost is at the edge (O tiles) - change horizontal movement to vertical
+        if (ghost.x <= tileSize || ghost.x >= boardWidth - 2 * tileSize) {
+            if (ghost.direction == "L" || ghost.direction == "R") {
+                const verticalDirections = ["U", "D"];
+                const randomVertical = verticalDirections[Math.floor(Math.random() * 2)];
+                ghost.direction = randomVertical;
+                ghost.velocityUpdate();
+            }
+        }
 
         //check wall collision for ghosts
         let collided = false;
@@ -259,11 +254,37 @@ function move() {
             }
         }
 
-        //if collided, pick a new random direction
+        //if collided, try to find a valid direction
         if (collided) {
-            const randomDirection = directions[Math.floor(Math.random() * 4)];
-            ghost.direction = randomDirection;
-            ghost.velocityUpdate();
+            let validDirection = false;
+            let attempts = 0;
+            
+            while (!validDirection && attempts < 4) {
+                const randomDirection = directions[Math.floor(Math.random() * 4)];
+                ghost.direction = randomDirection;
+                ghost.velocityUpdate();
+                
+                //test if this direction would cause immediate collision
+                const testX = ghost.x + ghost.velocityX;
+                const testY = ghost.y + ghost.velocityY;
+                
+                let wouldCollide = false;
+                for (let wall of walls) {
+                    if (testX < wall.x + wall.width &&
+                        testX + ghost.width > wall.x &&
+                        testY < wall.y + wall.height &&
+                        testY + ghost.height > wall.y) {
+                        wouldCollide = true;
+                        break;
+                    }
+                }
+                
+                if (!wouldCollide && testX >= 0 && testX + ghost.width <= boardWidth) {
+                    validDirection = true;
+                }
+                
+                attempts++;
+            }
         }
     }
 
