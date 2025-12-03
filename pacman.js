@@ -249,6 +249,16 @@ function move() {
             }
         }
 
+        //check ghost-to-ghost collision
+        for (let otherGhost of ghosts) {
+            if (ghost !== otherGhost && Collison(ghost, otherGhost)) {
+                ghost.x -= ghost.velocityX;
+                ghost.y -= ghost.velocityY;
+                collided = true;
+                break;
+            }
+        }
+
         //if collided, pick a new random direction
         if (collided) {
             const randomDirection = directions[Math.floor(Math.random() * 4)];
