@@ -184,12 +184,12 @@ function draw() {
     }
 
     //draw score
-    context.fillStyle = "white";
+    context.fillStyle = "black";
     context.font = "20px Arial";
     context.fillText("Score: " + score, 10, 20);
 
     //draw lives
-    context.fillStyle = "white";
+    context.fillStyle = "black";
     context.font = "20px Arial";
     context.fillText("Lives: " + lives, boardWidth - 100, 20);
     
