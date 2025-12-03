@@ -183,6 +183,24 @@ function draw() {
         context.fillRect(food.x, food.y, food.width, food.height);
     }
 
+    //draw score
+    context.fillStyle = "white";
+    context.font = "20px Arial";
+    context.fillText("Score: " + score, 10, 20);
+
+    //draw lives
+    context.fillStyle = "white";
+    context.font = "20px Arial";
+    context.fillText("Lives: " + lives, boardWidth - 100, 20);
+    
+    //check game over
+    if (lives <= 0) {
+        gameOver = true;
+        context.fillStyle = "red";
+        context.font = "50px Arial";
+        context.fillText("Game Over", boardWidth / 2 - 100, boardHeight / 2);
+    }
+
 }
 
 function move() {
@@ -250,7 +268,7 @@ function move() {
     }
     if (foodeaten) {
         foods.delete(foodeaten);
-    }
+    } 
 }
 
 function movepackman(e) {
