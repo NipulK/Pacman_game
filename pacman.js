@@ -199,10 +199,19 @@ function move() {
     for (let ghost of ghosts) {
 
         //simple AI for ghosts to always move up and down in the middle vertical path
-        if (ghost.y == tileSize * 9 && ghost.direction != "U" && ghost.direction != "D") 
+        if (ghost.y == tileSize * 20 && ghost.direction != "U" && ghost.direction != "D") 
         {
             ghost.updateDirection("U");
+            
         }
+        /*if (ghost.y == tileSize *9 && ghost.direction == "U")
+        {
+            ghost.updateDirection("D");
+        }
+        if (ghost.y == tileSize * 9 && ghost.direction == "D")
+        {
+            ghost.updateDirection("U");
+        }*/
 
         ghost.x += ghost.velocityX;
         ghost.y += ghost.velocityY;
