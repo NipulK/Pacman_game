@@ -158,9 +158,11 @@ function loadBoard() {
 
 function update() {
     //to be implemented
-    move();
-    draw();
-    setTimeout(update, 50); //20 fps 1 -> 1000ms/20 = 50
+    if (!gameOver) {
+        move();
+        draw();
+        setTimeout(update, 50); //20 fps 1 -> 1000ms/20 = 50
+    }
 }
 
 function draw() {
@@ -181,6 +183,24 @@ function draw() {
     context.fillStyle = "white"; //set the color of the food and fillstyle used to draw shapes
     for (let food of foods) {
         context.fillRect(food.x, food.y, food.width, food.height);
+    }
+
+    //draw score
+    context.fillStyle = "white";
+    context.font = "20px Arial";
+    context.fillText("Score: " + score, 10, 20);
+
+    //draw lives
+    context.fillStyle = "white";
+    context.font = "20px Arial";
+    context.fillText("Lives: " + lives, boardWidth - 100, 20);
+    
+    //check game over
+    if (lives <= 0) {
+        gameOver = true;
+        context.fillStyle = "red";
+        context.font = "50px Arial";
+        context.fillText("Game Over", boardWidth / 2 - 150, boardHeight / 2);
     }
 
     //draw score
@@ -299,7 +319,30 @@ function move() {
     }
     if (foodeaten) {
         foods.delete(foodeaten);
-    } 
+    }
+
+    //check ghost collision with pacman
+    for (let ghost of ghosts) {
+        if (Collison(pacman, ghost)) {
+            lives -= 1;
+            
+            //reset pacman position
+            pacman.x = pacman.startx;
+            pacman.y = pacman.starty;
+            pacman.velocityX = 0;
+            pacman.velocityY = 0;
+            
+            //reset all ghosts to their starting positions
+            for (let g of ghosts) {
+                g.x = g.startx;
+                g.y = g.starty;
+                const randomDirection = directions[Math.floor(Math.random() * 4)];
+                g.direction = randomDirection;
+                g.velocityUpdate();
+            }
+            break;
+        }
+    }
 }
 
 function movepackman(e) {
