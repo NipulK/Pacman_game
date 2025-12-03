@@ -110,6 +110,14 @@ window.onload = function() {
     //keyup and keydown are two different events
     //keyup - when the key is released
     //keydown - when the key is pressed down
+    
+    document.addEventListener("keyup", function(e) {
+        if (e.key == "r" || e.key == "R") {
+            if (gameOver) {
+                restartGame();
+            }
+        }
+    });
 }
 
 
@@ -154,6 +162,30 @@ function loadBoard() {
             }
         }     
     }
+}
+
+function restartGame() {
+    //reset game variables
+    score = 0;
+    lives = 3;
+    gameOver = false;
+    
+    //clear all sets
+    walls.clear();
+    foods.clear();
+    ghosts.clear();
+    
+    //reload the board
+    loadBoard();
+    
+    //reset ghost directions
+    for (let ghost of ghosts) {
+        const randomDirection = directions[Math.floor(Math.random() * 4)];
+        ghost.updateDirection(randomDirection);
+    }
+    
+    //restart the game loop
+    update();
 }
 
 function update() {
@@ -201,6 +233,10 @@ function draw() {
         context.fillStyle = "red";
         context.font = "50px Arial";
         context.fillText("Game Over", boardWidth / 2 - 150, boardHeight / 2);
+        
+        context.fillStyle = "white";
+        context.font = "20px Arial";
+        context.fillText("Press R to Restart", boardWidth / 2 - 80, boardHeight / 2 + 50);
     }
 
 }
